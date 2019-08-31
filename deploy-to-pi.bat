@@ -1,0 +1,1 @@
+"C:\Program Files\Putty\pscp" build/libs/ms-lights-0.0.1-SNAPSHOT.war pi@192.168.0.199:deploy/artifact/ms-lights.war
