@@ -1,4 +1,4 @@
-package za.co.jaredfishy.mslights.application.domain.status;
+package za.co.jaredfishy.mslights.application.domain.light.status;
 
 import za.co.jaredfishy.mslights.application.exception.UnknownLightModelException;
 

@@ -2,7 +2,7 @@ package za.co.jaredfishy.mslights.ws.controller;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import za.co.jaredfishy.mslights.application.domain.LightLocation;
+import za.co.jaredfishy.mslights.application.domain.light.LightLocation;
 import za.co.jaredfishy.mslights.application.service.LightService;
 
 import java.util.List;

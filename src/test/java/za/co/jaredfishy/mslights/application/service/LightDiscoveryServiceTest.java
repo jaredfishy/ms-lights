@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import za.co.jaredfishy.mslights.application.domain.Light;
+import za.co.jaredfishy.mslights.application.domain.light.Light;
 
 import java.net.DatagramSocket;
 import java.util.Map;

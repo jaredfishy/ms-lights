@@ -1,8 +1,9 @@
-package za.co.jaredfishy.mslights.application.domain;
+package za.co.jaredfishy.mslights.application.domain.light;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import za.co.jaredfishy.mslights.application.domain.command.CommandMethod;
-import za.co.jaredfishy.mslights.application.domain.status.ColorMode;
-import za.co.jaredfishy.mslights.application.domain.status.LightModel;
+import za.co.jaredfishy.mslights.application.domain.light.status.ColorMode;
+import za.co.jaredfishy.mslights.application.domain.light.status.LightModel;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class Light {
     private LightModel model;
     private String firmwareVersion;
     private List<CommandMethod> support;
-    private boolean power;
+    private boolean powered;
     private int bright;
     private ColorMode colorMode;
     private int ct;
@@ -28,7 +29,7 @@ public class Light {
             LightModel model,
             String firmwareVersion,
             List<CommandMethod> support,
-            boolean power,
+            boolean powered,
             int bright,
             ColorMode colorMode,
             int ct,
@@ -42,7 +43,7 @@ public class Light {
         this.model = model;
         this.firmwareVersion = firmwareVersion;
         this.support = support;
-        this.power = power;
+        this.powered = powered;
         this.bright = bright;
         this.colorMode = colorMode;
         this.ct = ct;
@@ -53,10 +54,27 @@ public class Light {
         this.location = location;
     }
 
+    @JsonProperty("id")
     public String getId() {
         return id;
     }
 
+    @JsonProperty("on")
+    public boolean isPowered() {
+        return powered;
+    }
+
+    @JsonProperty("model")
+    public LightModel getModel() {
+        return model;
+    }
+
+    @JsonProperty("name")
+    public String getName() {
+        return name;
+    }
+
+    @JsonProperty("location")
     public LightLocation getLocation() {
         return location;
     }

@@ -3,8 +3,9 @@ package za.co.jaredfishy.mslights.application.service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
-import za.co.jaredfishy.mslights.application.domain.Light;
+import za.co.jaredfishy.mslights.application.domain.light.Light;
 import za.co.jaredfishy.mslights.application.util.LightParser;
+import za.co.jaredfishy.mslights.application.util.OutputFormatter;
 
 import java.net.*;
 import java.util.Enumeration;
@@ -87,7 +88,7 @@ public class LightDiscoveryService {
         clientSocket.receive(receivePacket);
 
         String response = new String(receivePacket.getData());
-        System.out.println(response);
+        LOG.info("Discover Response: " + OutputFormatter.formatOutput(response));
         return LightParser.parse(response);
     }
 }

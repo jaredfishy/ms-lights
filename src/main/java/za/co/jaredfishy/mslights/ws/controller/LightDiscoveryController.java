@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import za.co.jaredfishy.mslights.application.domain.Light;
+import za.co.jaredfishy.mslights.application.domain.light.Light;
 import za.co.jaredfishy.mslights.application.service.LightDiscoveryService;
 
 import java.util.Map;

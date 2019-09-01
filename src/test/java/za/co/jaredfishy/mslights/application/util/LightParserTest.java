@@ -2,11 +2,11 @@ package za.co.jaredfishy.mslights.application.util;
 
 import org.junit.Assert;
 import org.junit.Test;
-import za.co.jaredfishy.mslights.application.domain.Light;
-import za.co.jaredfishy.mslights.application.domain.LightLocation;
+import za.co.jaredfishy.mslights.application.domain.light.Light;
+import za.co.jaredfishy.mslights.application.domain.light.LightLocation;
 import za.co.jaredfishy.mslights.application.domain.command.CommandMethod;
-import za.co.jaredfishy.mslights.application.domain.status.ColorMode;
-import za.co.jaredfishy.mslights.application.domain.status.LightModel;
+import za.co.jaredfishy.mslights.application.domain.light.status.ColorMode;
+import za.co.jaredfishy.mslights.application.domain.light.status.LightModel;
 
 import java.util.Arrays;
 
