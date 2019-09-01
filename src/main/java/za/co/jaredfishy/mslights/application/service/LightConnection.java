@@ -55,25 +55,29 @@ public class LightConnection {
     }
 
     public void send(Command command) {
+        String message = CommandMessageCreator.getMessage(command);
+        send(message);
+    }
+
+    public String send(String message) {
 
         try {
             BufferedOutputStream output = getOutputStream();
 
-            String message = CommandMessageCreator.getMessage(command);
             System.out.println("Sending message: " + message);
             output.write(message.getBytes());
             output.write("\r\n".getBytes());
             output.flush();
 
             BufferedReader input = getInputReader();
-            String line = input.readLine();
-            System.out.println("Received message: " + line);
+            String response = input.readLine();
+            System.out.println("Received message: " + response);
+            return response;
 
         } catch (Exception err) {
             err.printStackTrace();
             throw new RuntimeException("Unable to send command");
         }
-
     }
 
     public void close() throws Exception {
