@@ -4,11 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import za.co.jaredfishy.mslights.application.domain.light.Light;
 import za.co.jaredfishy.mslights.application.domain.light.LightLocation;
-import za.co.jaredfishy.mslights.application.domain.command.CommandMethod;
-import za.co.jaredfishy.mslights.application.domain.light.status.ColorMode;
-import za.co.jaredfishy.mslights.application.domain.light.status.LightModel;
-
-import java.util.Arrays;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
@@ -48,12 +43,12 @@ public class LightParserTest {
     private Light getExpected() {
         return new Light(
                 "0x0000000007f16b5c",
-                LightModel.COLOR,
+                "color",
                 "26",
-                Arrays.asList(CommandMethod.SET_POWER, CommandMethod.SET_RGB),
+                "set_power set_rgb jaredfishy",
                 true,
                 100,
-                ColorMode.TEMPERATURE,
+                "2",
                 3500,
                 16711680,
                 359,

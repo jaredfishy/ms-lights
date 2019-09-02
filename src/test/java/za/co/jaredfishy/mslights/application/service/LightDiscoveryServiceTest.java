@@ -7,6 +7,7 @@ import org.junit.Test;
 import za.co.jaredfishy.mslights.application.domain.light.Light;
 
 import java.net.DatagramSocket;
+import java.util.List;
 import java.util.Map;
 
 @Ignore
@@ -34,7 +35,7 @@ public class LightDiscoveryServiceTest {
 
     @Test
     public void discover() {
-        Map<String, Light> lights = lightDiscoveryService.discover();
+        List<Light> lights = lightDiscoveryService.discover();
         Assert.assertNotNull(lights);
     }
 }

@@ -1,8 +1,5 @@
 package za.co.jaredfishy.mslights.application.service;
 
-import za.co.jaredfishy.mslights.application.domain.command.Command;
-import za.co.jaredfishy.mslights.application.util.CommandMessageCreator;
-
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -54,11 +51,6 @@ public class LightConnection {
         return inputReader;
     }
 
-    public void send(Command command) {
-        String message = CommandMessageCreator.getMessage(command);
-        send(message);
-    }
-
     public String send(String message) {
 
         try {
@@ -84,9 +76,5 @@ public class LightConnection {
         if (output != null) output.close();
         if (inputReader != null) inputReader.close();
         if (server != null) server.close();
-    }
-
-    public String getIpAddress() {
-        return ipAddress;
     }
 }

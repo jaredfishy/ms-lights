@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 import za.co.jaredfishy.mslights.application.domain.YeelightCommandRequest;
 import za.co.jaredfishy.mslights.application.service.YeelightService;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/yeelight")
 public class YeelightController {
@@ -19,12 +22,7 @@ public class YeelightController {
     }
 
     @PostMapping(value = "/command", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String sendCommand(@RequestBody YeelightCommandRequest yeelightCommandRequest) {
+    public List<Map<String, Object>> sendCommands(@RequestBody YeelightCommandRequest yeelightCommandRequest) {
         return yeelightService.send(yeelightCommandRequest);
-    }
-
-    @PostMapping(value = "/commands", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String sendCommands(@RequestBody YeelightCommandRequest yeelightCommandRequest) {
-        return yeelightService.sendMultiple(yeelightCommandRequest);
     }
 }

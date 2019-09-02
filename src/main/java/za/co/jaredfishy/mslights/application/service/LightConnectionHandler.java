@@ -9,6 +9,7 @@ import java.util.Map;
 public class LightConnectionHandler {
 
     private static LightConnectionHandler lightConnectionHandler = null;
+
     private static void createNewInstance() {
         lightConnectionHandler = new LightConnectionHandler(new LightConnectionCreator());
     }
@@ -22,7 +23,6 @@ public class LightConnectionHandler {
         lightConnectionHandler.closeConnections();
         createNewInstance();
     }
-
 
     private LightConnectionCreator lightConnectionCreator;
     private Map<String, LightConnection> connections;

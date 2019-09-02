@@ -1,5 +1,7 @@
 package za.co.jaredfishy.mslights.application.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDateTime;
 
 public class StatusResponse {
@@ -12,10 +14,12 @@ public class StatusResponse {
         this.connectionCount = connectionCount;
     }
 
+    @JsonProperty("timestamp")
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
+    @JsonProperty("connectionCount")
     public int getConnectionCount() {
         return connectionCount;
     }

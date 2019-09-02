@@ -1,21 +1,16 @@
 package za.co.jaredfishy.mslights.application.domain.light;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import za.co.jaredfishy.mslights.application.domain.command.CommandMethod;
-import za.co.jaredfishy.mslights.application.domain.light.status.ColorMode;
-import za.co.jaredfishy.mslights.application.domain.light.status.LightModel;
-
-import java.util.List;
 
 public class Light {
 
     private String id;
-    private LightModel model;
+    private String model;
     private String firmwareVersion;
-    private List<CommandMethod> support;
+    private String support;
     private boolean powered;
     private int bright;
-    private ColorMode colorMode;
+    private String colorMode;
     private int ct;
     private long rgb;
     private int hue;
@@ -26,12 +21,12 @@ public class Light {
 
     public Light(
             String id,
-            LightModel model,
+            String model,
             String firmwareVersion,
-            List<CommandMethod> support,
+            String support,
             boolean powered,
             int bright,
-            ColorMode colorMode,
+            String colorMode,
             int ct,
             long rgb,
             int hue,
@@ -65,7 +60,7 @@ public class Light {
     }
 
     @JsonProperty("model")
-    public LightModel getModel() {
+    public String getModel() {
         return model;
     }
 

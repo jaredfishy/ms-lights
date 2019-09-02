@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import za.co.jaredfishy.mslights.application.domain.light.Light;
 import za.co.jaredfishy.mslights.application.service.LightDiscoveryService;
 
-import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequestMapping("/light")
@@ -23,7 +23,7 @@ public class LightDiscoveryController {
 
     @GetMapping(path = "/discover", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public Map<String, Light> discover() {
+    public List<Light> discover() {
         return lightDiscoveryService.discover();
     }
 }

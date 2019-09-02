@@ -8,9 +8,7 @@ import za.co.jaredfishy.mslights.application.util.LightParser;
 import za.co.jaredfishy.mslights.application.util.OutputFormatter;
 
 import java.net.*;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class LightDiscoveryService {
@@ -49,7 +47,7 @@ public class LightDiscoveryService {
         return new DatagramSocket(inetAddr);
     }
 
-    public Map<String, Light> discover() {
+    public List<Light> discover() {
         Map<String, Light> lightMap = new HashMap<>();
         DatagramSocket clientSocket = null;
         try {
@@ -78,8 +76,9 @@ public class LightDiscoveryService {
             if (clientSocket != null)
                 clientSocket.close();
         }
-        LOG.info("Discovered " + lightMap.size() + " device(s)");
-        return lightMap;
+        List<Light> lightList = new ArrayList(lightMap.values());
+        LOG.info("Discovered " + lightList.size() + " device(s)");
+        return lightList;
     }
 
     public Light getNextLight(DatagramSocket clientSocket) throws Exception {

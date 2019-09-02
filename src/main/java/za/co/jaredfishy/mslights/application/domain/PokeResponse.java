@@ -14,6 +14,7 @@ public class PokeResponse {
         this.timestamp = LocalDateTime.now();
     }
 
+    @JsonProperty("message")
     public String getMessage() {
         return message;
     }
