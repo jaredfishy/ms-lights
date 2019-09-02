@@ -19,7 +19,7 @@ public class YeelightRawCommandMessageCreatorTest {
         params.add("power");
         params.add("not_exist");
         params.add("bright");
-        YeelightCommandRequest commandRequest = new YeelightCommandRequest(null, null,7, "get_prop", params);
+        YeelightCommandRequest commandRequest = new YeelightCommandRequest(null, 7, "get_prop", params);
 
         String rawCommand = YeelightRawCommandMessageCreator.getMessage(commandRequest);
         String expectedCommand = "{\"id\":7, \"method\":\"get_prop\", params:[\"power\", \"not_exist\", \"bright\"]}";

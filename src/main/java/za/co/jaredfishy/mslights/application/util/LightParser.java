@@ -1,12 +1,12 @@
 package za.co.jaredfishy.mslights.application.util;
 
 import za.co.jaredfishy.mslights.application.domain.light.Light;
-import za.co.jaredfishy.mslights.application.domain.command.CommandMethod;
-import za.co.jaredfishy.mslights.application.domain.light.status.ColorMode;
-import za.co.jaredfishy.mslights.application.domain.light.status.LightModel;
 import za.co.jaredfishy.mslights.application.domain.light.LightLocation;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class LightParser {
 
@@ -44,17 +44,17 @@ public class LightParser {
         LightLocation location = parseLocation(locationString);
 
         String supportString = map.get(KEY_SUPPORT);
-        List<CommandMethod> support = parseCommands(supportString);
+        //List<CommandMethod> support = parseCommands(supportString);
         // get_prop set_default set_power toggle set_bright start_cf stop_cf set_scene cron_add cron_get cron_del set_ct_abx set_rgb set_hsv set_adjust adjust_bright adjust_ct adjust_color set_music set_name
 
         return new Light(
                 map.get(KEY_ID),
-                LightModel.fromString(map.get(KEY_MODEL)),
+                map.get(KEY_MODEL),
                 map.get(KEY_FW_VER),
-                support,
+                supportString,
                 map.get(KEY_POWER).equalsIgnoreCase("on"),
                 Integer.parseInt(map.get(KEY_BRIGHT)),
-                ColorMode.fromString(map.get(KEY_COLOR_MODE)),
+                map.get(KEY_COLOR_MODE),
                 Integer.parseInt(map.get(KEY_CT)),
                 Long.parseLong(map.get(KEY_RGB)),
                 Integer.parseInt(map.get(KEY_HUE)),
@@ -74,17 +74,5 @@ public class LightParser {
                 ip,
                 Integer.parseInt(port)
         );
-    }
-
-    public static List<CommandMethod> parseCommands(String support){
-        List<CommandMethod> commands = new ArrayList<>();
-        String [] supportArray = support.split(" ");
-        for(String commandString: supportArray){
-            CommandMethod command = CommandMethod.fromString(commandString);
-            if(command!=null)
-                commands.add(command);
-        }
-
-        return commands;
     }
 }
