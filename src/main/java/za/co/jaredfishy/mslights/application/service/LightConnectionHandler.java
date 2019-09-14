@@ -20,7 +20,8 @@ public class LightConnectionHandler {
     }
 
     public static void reinitialise() {
-        lightConnectionHandler.closeConnections();
+        if(lightConnectionHandler!=null)
+            lightConnectionHandler.closeConnections();
         createNewInstance();
     }
 
