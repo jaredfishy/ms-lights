@@ -7,6 +7,6 @@ import za.co.jaredfishy.mslights.application.domain.PokeResponse;
 public class PokeService {
 
     public PokeResponse poke() {
-        return new PokeResponse("Hey, that tickles!");
+        return new PokeResponse("Hey, that tickles:D");
     }
 }
