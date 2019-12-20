@@ -1,14 +1,14 @@
 package za.co.jaredfishy.mslights.application.util;
 
-import za.co.jaredfishy.mslights.application.domain.light.Light;
-import za.co.jaredfishy.mslights.application.domain.light.LightLocation;
+import za.co.jaredfishy.mslights.application.domain.yeelight.YeelightResponse;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LightParser {
+public class YeelightResponseParser {
 
     private static final String KEY_LOCATION = "Location";
     private static final String KEY_ID = "id";
@@ -24,8 +24,7 @@ public class LightParser {
     private static final String KEY_SAT = "sat";
     private static final String KEY_NAME = "name";
 
-
-    public static Light parse(String input) {
+    public static YeelightResponse parse(String input) {
 
         List<String> lines = Arrays.asList(input.split("\r\n"));
         Map<String, String> map = new HashMap<>();
@@ -41,14 +40,14 @@ public class LightParser {
 
         // Location: yeelight://192.168.0.103:55443
         String locationString = map.get(KEY_LOCATION);
-        LightLocation location = parseLocation(locationString);
 
         String supportString = map.get(KEY_SUPPORT);
         //List<CommandMethod> support = parseCommands(supportString);
         // get_prop set_default set_power toggle set_bright start_cf stop_cf set_scene cron_add cron_get cron_del set_ct_abx set_rgb set_hsv set_adjust adjust_bright adjust_ct adjust_color set_music set_name
 
-        return new Light(
+        return new YeelightResponse(
                 map.get(KEY_ID),
+                map.get(KEY_LOCATION),
                 map.get(KEY_MODEL),
                 map.get(KEY_FW_VER),
                 supportString,
@@ -60,19 +59,19 @@ public class LightParser {
                 Integer.parseInt(map.get(KEY_HUE)),
                 Integer.parseInt(map.get(KEY_SAT)),
                 map.get(KEY_NAME),
-                location
+                LocalDateTime.now()
         );
     }
 
-    public static LightLocation parseLocation(String location) {
-
-        String[] locationBits = location.split(":");
-        String ip = locationBits[1].substring(2);
-        String port = locationBits[2];
-
-        return new LightLocation(
-                ip,
-                Integer.parseInt(port)
-        );
-    }
+//    public static LightLocation parseLocation(String location) {
+//
+//        String[] locationBits = location.split(":");
+//        String ip = locationBits[1].substring(2);
+//        String port = locationBits[2];
+//
+//        return new LightLocation(
+//                ip,
+//                Integer.parseInt(port)
+//        );
+//    }
 }

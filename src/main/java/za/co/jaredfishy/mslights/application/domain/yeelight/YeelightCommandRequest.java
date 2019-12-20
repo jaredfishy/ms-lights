@@ -1,4 +1,4 @@
-package za.co.jaredfishy.mslights.application.domain;
+package za.co.jaredfishy.mslights.application.domain.yeelight;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,23 +1,24 @@
 package za.co.jaredfishy.mslights.application.domain.light;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.time.LocalDateTime;
 
-public class LightLocation {
+public class LightLocation extends LightVariable {
 
     private final String ip;
     private final int port;
 
-    @JsonCreator
-    public LightLocation(
-            @JsonProperty("ip") String ip,
-            @JsonProperty("port") int port
-    ) {
+
+    public LightLocation(LocalDateTime timestamp, String ip, int port) {
+        super(timestamp);
         this.ip = ip;
         this.port = port;
     }
 
     public String getIp() {
         return ip;
+    }
+
+    public int getPort() {
+        return port;
     }
 }

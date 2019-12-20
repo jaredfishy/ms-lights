@@ -2,7 +2,7 @@ package za.co.jaredfishy.mslights.application.service;
 
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
-import za.co.jaredfishy.mslights.application.domain.YeelightCommandRequest;
+import za.co.jaredfishy.mslights.application.domain.yeelight.YeelightCommandRequest;
 import za.co.jaredfishy.mslights.application.util.YeelightRawCommandMessageCreator;
 
 import java.util.ArrayList;

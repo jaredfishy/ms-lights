@@ -2,17 +2,16 @@ package za.co.jaredfishy.mslights.application.util;
 
 import org.junit.Assert;
 import org.junit.Test;
-import za.co.jaredfishy.mslights.application.domain.light.Light;
-import za.co.jaredfishy.mslights.application.domain.light.LightLocation;
+import za.co.jaredfishy.mslights.application.domain.yeelight.YeelightResponse;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 
-public class LightParserTest {
+public class YeelightResponseParserTest {
 
     @Test
     public void parse() {
-        Light expected = getExpected();
-        Light actual = LightParser.parse(getString());
+        YeelightResponse actual = YeelightResponseParser.parse(getString());
+        YeelightResponse expected = DummyDataUtil.getYeelightResponse(actual.getTimestamp());
         Assert.assertThat(expected, sameBeanAs(actual));
     }
 
@@ -35,26 +34,7 @@ public class LightParserTest {
         bob.append("rgb: 16711680\r\n");
         bob.append("hue: 359\r\n");
         bob.append("sat: 100\r\n");
-        bob.append("name:\r\n");
+        bob.append("name: My First Yeelight!\r\n");
         return bob.toString();
-    }
-
-
-    private Light getExpected() {
-        return new Light(
-                "0x0000000007f16b5c",
-                "color",
-                "26",
-                "set_power set_rgb jaredfishy",
-                true,
-                100,
-                "2",
-                3500,
-                16711680,
-                359,
-                100,
-                "",
-                new LightLocation("192.168.0.100", 55443)
-        );
     }
 }

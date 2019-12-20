@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import za.co.jaredfishy.mslights.application.domain.YeelightCommandRequest;
+import za.co.jaredfishy.mslights.application.domain.yeelight.YeelightCommandRequest;
 import za.co.jaredfishy.mslights.application.service.YeelightService;
 
 import java.util.List;
