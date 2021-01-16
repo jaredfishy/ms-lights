@@ -29,11 +29,6 @@ public class LightDiscoveryServiceTest {
     }
 
     @Test
-    public void testNic() throws Exception {
-        lightDiscoveryService.getSocket();
-    }
-
-    @Test
     public void discover() {
         List<Light> lights = lightDiscoveryService.discover();
         Assert.assertNotNull(lights);
