@@ -2,7 +2,6 @@ package za.co.jaredfishy.mslights.application.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -53,7 +52,12 @@ public class LightConnectionHandler {
             LightConnection connection
     ) {
         if (connection == null) return false;
-        if (connection.isClosed()) {
+        if (connection.isHealthy()) {
+            try {
+                connection.cleanup();
+            }catch(Exception err){
+
+            }
             connections.remove(ip);
             return false;
         }
@@ -67,7 +71,7 @@ public class LightConnectionHandler {
     private synchronized void closeConnections() {
         for (LightConnection connection : connections.values()) {
             try {
-                connection.close();
+                connection.cleanup();
             } catch (Exception err) {
                 err.printStackTrace();
             }

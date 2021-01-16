@@ -2,11 +2,9 @@ package za.co.jaredfishy.mslights.application.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -20,11 +18,12 @@ public class LightConnection {
     private Socket server;
     private BufferedOutputStream output;
     private BufferedReader inputReader;
-
+    private boolean healthy;
 
 
     public LightConnection(String ipAddress) {
         this.ipAddress = ipAddress;
+        this.healthy = false;
         connect(ipAddress);
     }
 
@@ -37,6 +36,7 @@ public class LightConnection {
                 inetAddress = InetAddress.getLocalHost();
 
             this.server = new Socket(inetAddress, PORT);
+            this.healthy = true;
         } catch (Exception err) {
             err.printStackTrace();
             throw new RuntimeException("Unable to open connection.");
@@ -60,11 +60,11 @@ public class LightConnection {
         return inputReader;
     }
 
-    public boolean isClosed(){
-        return server.isClosed();
+    public boolean isHealthy() {
+        return this.healthy && !server.isClosed();
     }
 
-    public String send(String message){
+    public String send(String message) {
 
         try {
             BufferedOutputStream output = getOutputStream();
@@ -83,18 +83,32 @@ public class LightConnection {
             String errorMessage = "Unable to send command to " + ipAddress;
             LOG.error(errorMessage, err);
             err.printStackTrace();
+            healthy = false;
             throw new RuntimeException(errorMessage);
-        }finally {
-            try {
-                this.close();
-            } catch (Exception e) {
-            }
         }
     }
 
-    public void close() throws Exception {
-        if (output != null) output.close();
-        if (inputReader != null) inputReader.close();
-        if (server != null) server.close();
+    public void cleanup() throws Exception {
+        if (output != null) {
+            try {
+                output.close();
+            } catch (Exception err) {
+            }
+            output = null;
+        }
+        if (inputReader != null) {
+            try {
+                inputReader.close();
+            } catch (Exception err) {
+            }
+            inputReader = null;
+        }
+        if (server != null) {
+            try {
+                server.close();
+            } catch (Exception err) {
+            }
+            server = null;
+        }
     }
 }

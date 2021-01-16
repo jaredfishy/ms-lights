@@ -78,7 +78,7 @@ public class LightDiscoveryService {
     private DatagramSocket trySocket(NetworkInterface nif) throws Exception {
         LOG.debug("Found Network interface with name: " + nif.getName());
         Enumeration<InetAddress> nifAddresses = nif.getInetAddresses();
-        InetSocketAddress inetAddr = new InetSocketAddress(nifAddresses.nextElement(), PORT);
+        InetSocketAddress inetAddr = new InetSocketAddress(nifAddresses.nextElement(), 0);
         LOG.info("Found interface: " + nif.getName());
         return new DatagramSocket(inetAddr);
     }
@@ -123,8 +123,8 @@ public class LightDiscoveryService {
         clientSocket.receive(receivePacket);
 
         String response = new String(receivePacket.getData());
-        LOG.debug("Discover Response: " + OutputFormatter.formatOutput(response));
         YeelightResponse yeelightResponse = YeelightResponseParser.parse(response);
+        LOG.info("Discover Response: " + yeelightResponse);
         return new Light(yeelightResponse);
     }
 }

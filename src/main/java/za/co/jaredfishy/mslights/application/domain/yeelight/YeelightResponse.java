@@ -1,5 +1,8 @@
 package za.co.jaredfishy.mslights.application.domain.yeelight;
 
+import com.fasterxml.jackson.databind.JsonSerializable;
+import za.co.jaredfishy.mslights.application.util.JSONSerializer;
+
 import java.time.LocalDateTime;
 
 public class YeelightResponse {
@@ -105,5 +108,9 @@ public class YeelightResponse {
 
     public LocalDateTime getTimestamp() {
         return timestamp;
+    }
+
+    public String toString(){
+        return JSONSerializer.serialize(this);
     }
 }
