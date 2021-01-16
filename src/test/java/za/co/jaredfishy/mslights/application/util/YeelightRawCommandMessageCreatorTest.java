@@ -3,7 +3,7 @@ package za.co.jaredfishy.mslights.application.util;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
-import za.co.jaredfishy.mslights.application.domain.YeelightCommandRequest;
+import za.co.jaredfishy.mslights.application.domain.yeelight.YeelightCommandRequest;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -21,3 +21,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testCompile group: 'com.shazam', name: 'shazamcrest', version: '0.1'
 }
+
+
+bootWar {
+	archiveName = 'ms-lights.war'
+}

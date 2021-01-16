@@ -4,8 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import za.co.jaredfishy.mslights.application.domain.light.Light;
-import za.co.jaredfishy.mslights.application.util.LightParser;
+import za.co.jaredfishy.mslights.application.domain.yeelight.YeelightResponse;
 import za.co.jaredfishy.mslights.application.util.OutputFormatter;
+import za.co.jaredfishy.mslights.application.util.YeelightResponseParser;
 
 import java.net.*;
 import java.util.*;
@@ -88,6 +89,7 @@ public class LightDiscoveryService {
 
         String response = new String(receivePacket.getData());
         LOG.info("Discover Response: " + OutputFormatter.formatOutput(response));
-        return LightParser.parse(response);
+        YeelightResponse yeelightResponse = YeelightResponseParser.parse(response);
+        return new Light(yeelightResponse);
     }
 }

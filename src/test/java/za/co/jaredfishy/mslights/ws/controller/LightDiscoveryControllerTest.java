@@ -10,13 +10,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import za.co.jaredfishy.mslights.application.domain.light.Light;
 import za.co.jaredfishy.mslights.application.service.LightDiscoveryService;
+import za.co.jaredfishy.mslights.application.util.DummyDataUtil;
 import za.co.jaredfishy.mslights.application.util.DummyLight;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.ArgumentMatchers.isNotNull;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -35,8 +39,8 @@ public class LightDiscoveryControllerTest {
     @Test
     public void testDiscover() throws Exception {
 
-        List<Light> lights = new ArrayList<>();
-        lights.add(DummyLight.get(1));
+        LocalDateTime timestamp = LocalDateTime.of(2020,12,21,13,37,00);
+        List<Light> lights = DummyDataUtil.getDiscoveryData(timestamp);
 
         given(lightDiscoveryService.discover()).willReturn(lights);
 
@@ -44,14 +48,24 @@ public class LightDiscoveryControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].size()", is(5)))
+                .andExpect(jsonPath("$[0].size()", is(6)))
                 .andExpect(jsonPath("$[0].id", is("0x0000000007f16b5c")))
+                .andExpect(jsonPath("$[0].brand", is("YEELIGHT")))
                 .andExpect(jsonPath("$[0].model", is("color")))
-//                .andExpect(jsonPath("$[0].firmwareVersion", is("26")))
-//                .andExpect(jsonPath("$[0].support", is("set_power set_rgb jaredfishy")))
-                .andExpect(jsonPath("$[0].on", is(true)))
-                .andExpect(jsonPath("$[0].name", is("My Bulb")))
+                .andExpect(jsonPath("$[0].name", is("My First Yeelight!")))
+
+                .andExpect(jsonPath("$[0].status.size()", is(8)))
+                .andExpect(jsonPath("$[0].status.powered", is(true)))
+                .andExpect(jsonPath("$[0].status.bright", is(100)))
+                .andExpect(jsonPath("$[0].status.colorMode", is("2")))
+                .andExpect(jsonPath("$[0].status.ct", is(3500)))
+                .andExpect(jsonPath("$[0].status.rgb", is(16711680)))
+                .andExpect(jsonPath("$[0].status.hue", is(359)))
+                .andExpect(jsonPath("$[0].status.sat", is(100)))
+
+                .andExpect(jsonPath("$[0].location.size()", is(3)))
                 .andExpect(jsonPath("$[0].location.ip", is("192.168.0.100")))
+                .andExpect(jsonPath("$[0].location.port", is(55443)))
         ;
     }
 }

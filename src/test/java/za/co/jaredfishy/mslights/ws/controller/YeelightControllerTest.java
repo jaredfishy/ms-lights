@@ -11,7 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import za.co.jaredfishy.mslights.application.domain.YeelightCommandRequest;
+import za.co.jaredfishy.mslights.application.domain.yeelight.YeelightCommandRequest;
 import za.co.jaredfishy.mslights.application.service.YeelightService;
 
 import java.util.ArrayList;
