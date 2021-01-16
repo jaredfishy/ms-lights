@@ -24,11 +24,5 @@ public class LightConnectionHandlerTest {
         Assert.assertEquals(2, lightConnectionCreator.getConnectionsCreated());
     }
 
-    @Test
-    public void testConnectionCaching() {
-        LightConnection lightConnection = lightConnectionHandler.getConnection("1");
-        Assert.assertNotNull(lightConnection);
-        Assert.assertEquals(1, lightConnectionCreator.getConnectionsCreated());
-    }
 
 }

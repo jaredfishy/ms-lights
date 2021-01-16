@@ -2,6 +2,7 @@ package za.co.jaredfishy.mslights.application.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import za.co.jaredfishy.mslights.application.domain.light.Light;
 import za.co.jaredfishy.mslights.application.domain.yeelight.YeelightResponse;
@@ -20,6 +21,9 @@ public class LightDiscoveryService {
     private static final int TIMEOUT_MILLIS = 2000;
     private static final String NL = "\r\n";
 
+    @Value("${network.interface.name}")
+    private String networkInterfaceName;
+
     private String getDiscoveryString() {
 
         StringBuilder builder = new StringBuilder();
@@ -34,17 +38,48 @@ public class LightDiscoveryService {
         return builder.toString();
     }
 
-    public DatagramSocket getSocket() throws Exception {
-        String nifName = "eth1";
-        Enumeration<NetworkInterface> nifs = NetworkInterface.getNetworkInterfaces();
-        NetworkInterface nif = NetworkInterface.getByName(nifName);
-        if (nif == null) {
-            LOG.error("No Network Interface found with name \"" + nifName + "\". Using default.");
+    private DatagramSocket getSocket() throws Exception {
+
+        if (networkInterfaceName.length() == 0) {
+            LOG.info("Preferred Network Interface not specified. Using default.");
             return new DatagramSocket();
         }
+
+        if (networkInterfaceName.equals("*")) {
+            return getAnySocket();
+        } else {
+            NetworkInterface nif = NetworkInterface.getByName(networkInterfaceName);
+            try {
+                return trySocket(nif);
+            } catch (Exception err) {
+
+            }
+            LOG.info("Preferred Network Interface not found. Using default.");
+            return new DatagramSocket();
+        }
+    }
+
+    private DatagramSocket getAnySocket() throws Exception {
+        Enumeration<NetworkInterface> nifs = NetworkInterface.getNetworkInterfaces();
+        while (nifs.hasMoreElements()) {
+            NetworkInterface nif = nifs.nextElement();
+            if (nif.getName().startsWith("eth")) {
+                try {
+                    return trySocket(nif);
+                } catch (Exception err) {
+                    LOG.error("Network Interface \"" + nif.getName() + "\" did not work.");
+                }
+            }
+        }
+        LOG.info("No Network Interface found. Using default.");
+        return new DatagramSocket();
+    }
+
+    private DatagramSocket trySocket(NetworkInterface nif) throws Exception {
         LOG.debug("Found Network interface with name: " + nif.getName());
         Enumeration<InetAddress> nifAddresses = nif.getInetAddresses();
-        InetSocketAddress inetAddr = new InetSocketAddress(nifAddresses.nextElement(), 0);
+        InetSocketAddress inetAddr = new InetSocketAddress(nifAddresses.nextElement(), PORT);
+        LOG.info("Found interface: " + nif.getName());
         return new DatagramSocket(inetAddr);
     }
 
@@ -88,7 +123,7 @@ public class LightDiscoveryService {
         clientSocket.receive(receivePacket);
 
         String response = new String(receivePacket.getData());
-        LOG.info("Discover Response: " + OutputFormatter.formatOutput(response));
+        LOG.debug("Discover Response: " + OutputFormatter.formatOutput(response));
         YeelightResponse yeelightResponse = YeelightResponseParser.parse(response);
         return new Light(yeelightResponse);
     }

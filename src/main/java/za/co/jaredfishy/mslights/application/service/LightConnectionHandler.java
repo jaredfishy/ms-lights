@@ -1,5 +1,8 @@
 package za.co.jaredfishy.mslights.application.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -8,7 +11,10 @@ import java.util.Map;
 @Component
 public class LightConnectionHandler {
 
+    private static final Logger LOG = LogManager.getLogger(LightConnectionHandler.class);
+
     private static LightConnectionHandler lightConnectionHandler = null;
+
 
     private static void createNewInstance() {
         lightConnectionHandler = new LightConnectionHandler(new LightConnectionCreator());
@@ -20,7 +26,7 @@ public class LightConnectionHandler {
     }
 
     public static void reinitialise() {
-        if(lightConnectionHandler!=null)
+        if (lightConnectionHandler != null)
             lightConnectionHandler.closeConnections();
         createNewInstance();
     }
@@ -35,11 +41,23 @@ public class LightConnectionHandler {
 
     LightConnection getConnection(String ip) {
         LightConnection connection = connections.get(ip);
-        if (connection == null) {
+        if (!isValidConnection(ip, connection)) {
             connection = lightConnectionCreator.createConnection(ip);
             connections.put(ip, connection);
         }
         return connection;
+    }
+
+    public boolean isValidConnection(
+            String ip,
+            LightConnection connection
+    ) {
+        if (connection == null) return false;
+        if (connection.isClosed()) {
+            connections.remove(ip);
+            return false;
+        }
+        return true;
     }
 
     public int getConnectionCount() {
