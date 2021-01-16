@@ -8,6 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import za.co.jaredfishy.mslights.application.domain.FormattedDateTime;
 import za.co.jaredfishy.mslights.application.domain.light.Light;
 import za.co.jaredfishy.mslights.application.service.LightDiscoveryService;
 import za.co.jaredfishy.mslights.application.util.DummyDataUtil;
@@ -39,7 +40,7 @@ public class LightDiscoveryControllerTest {
     @Test
     public void testDiscover() throws Exception {
 
-        LocalDateTime timestamp = LocalDateTime.of(2020,12,21,13,37,00);
+        FormattedDateTime timestamp = FormattedDateTime.of(LocalDateTime.of(2020,12,21,13,37,00));
         List<Light> lights = DummyDataUtil.getDiscoveryData(timestamp);
 
         given(lightDiscoveryService.discover()).willReturn(lights);

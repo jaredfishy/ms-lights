@@ -1,5 +1,6 @@
 package za.co.jaredfishy.mslights.application.util;
 
+import za.co.jaredfishy.mslights.application.domain.FormattedDateTime;
 import za.co.jaredfishy.mslights.application.domain.light.Light;
 import za.co.jaredfishy.mslights.application.domain.yeelight.YeelightResponse;
 
@@ -9,15 +10,15 @@ import java.util.List;
 
 public class DummyDataUtil {
 
-    public static LocalDateTime getTimestamp(){
-        return LocalDateTime.of(2020,12,21,13,37,00);
+    public static FormattedDateTime getTimestamp(){
+        return FormattedDateTime.of(LocalDateTime.of(2020,12,21,13,37,00));
     }
 
-    public static List<Light> getDiscoveryData(LocalDateTime timestamp) {
+    public static List<Light> getDiscoveryData(FormattedDateTime timestamp) {
         return Arrays.asList(new Light(DummyDataUtil.getYeelightResponse(timestamp)));
     }
 
-    public static YeelightResponse getYeelightResponse(LocalDateTime timestamp) {
+    public static YeelightResponse getYeelightResponse(FormattedDateTime timestamp) {
         return new YeelightResponse(
                 "0x0000000007f16b5c",
                 "yeelight://192.168.0.100:55443",

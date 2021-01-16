@@ -25,9 +25,4 @@ public class StatusController {
         return statusService.getStatus();
     }
 
-    @GetMapping(value = "/refresh")
-    public void refresh() {
-        statusService.refresh();
-    }
-
 }

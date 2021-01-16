@@ -1,8 +1,8 @@
 package za.co.jaredfishy.mslights.application.util;
 
+import za.co.jaredfishy.mslights.application.domain.FormattedDateTime;
 import za.co.jaredfishy.mslights.application.domain.yeelight.YeelightResponse;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +59,7 @@ public class YeelightResponseParser {
                 Integer.parseInt(map.get(KEY_HUE)),
                 Integer.parseInt(map.get(KEY_SAT)),
                 map.get(KEY_NAME),
-                LocalDateTime.now()
+                FormattedDateTime.now()
         );
     }
 

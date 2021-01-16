@@ -4,7 +4,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LightConnectionCreator {
-    public LightConnection createConnection(String ip) {
-        return new LightConnection(ip);
+
+    private static final int PORT = 55443;
+
+    public LightConnectionV2 createConnection(String ip) {
+        return new LightConnectionV2(ip, PORT);
     }
 }

@@ -1,5 +1,7 @@
 package za.co.jaredfishy.mslights.application.domain.light;
 
+import za.co.jaredfishy.mslights.application.domain.FormattedDateTime;
+
 import java.time.LocalDateTime;
 
 public class LightStatus extends LightVariable {
@@ -13,7 +15,7 @@ public class LightStatus extends LightVariable {
     private final int sat;
 
     public LightStatus(
-            LocalDateTime timestamp,
+            FormattedDateTime timestamp,
             boolean powered,
             int bright,
             String colorMode,

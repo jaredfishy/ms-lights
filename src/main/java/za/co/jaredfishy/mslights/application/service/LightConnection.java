@@ -8,14 +8,17 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 public class LightConnection {
 
     private final Logger LOG = LogManager.getLogger(LightConnection.class);
 
     private static final int PORT = 55443;
+    private static final int SOCKET_TIMEOUT = 1500;
+
     private final String ipAddress;
-    private Socket server;
+    private Socket socket;
     private BufferedOutputStream output;
     private BufferedReader inputReader;
     private boolean healthy;
@@ -35,7 +38,9 @@ public class LightConnection {
             else
                 inetAddress = InetAddress.getLocalHost();
 
-            this.server = new Socket(inetAddress, PORT);
+            socket = new Socket(inetAddress, PORT);
+            socket.setSoTimeout(SOCKET_TIMEOUT);
+
             this.healthy = true;
         } catch (Exception err) {
             err.printStackTrace();
@@ -46,7 +51,7 @@ public class LightConnection {
 
     private BufferedOutputStream getOutputStream() throws Exception {
         if (output == null) {
-            output = new BufferedOutputStream(this.server.getOutputStream());
+            output = new BufferedOutputStream(socket.getOutputStream());
             LOG.debug("Got output stream");
         }
         return output;
@@ -54,18 +59,17 @@ public class LightConnection {
 
     private BufferedReader getInputReader() throws Exception {
         if (inputReader == null) {
-            inputReader = new BufferedReader(new InputStreamReader(this.server.getInputStream()));
+            inputReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             LOG.debug("Got input stream");
         }
         return inputReader;
     }
 
     public boolean isHealthy() {
-        return this.healthy && !server.isClosed();
+        return this.healthy && !socket.isClosed();
     }
 
-    public String send(String message) {
-
+    public String send(String message) throws SocketTimeoutException {
         try {
             BufferedOutputStream output = getOutputStream();
 
@@ -78,11 +82,12 @@ public class LightConnection {
             String response = input.readLine();
             LOG.info("Received message from " + ipAddress + ": " + response);
             return response;
-
+        } catch (SocketTimeoutException err) {
+            healthy = false;
+            throw err;
         } catch (Exception err) {
             String errorMessage = "Unable to send command to " + ipAddress;
             LOG.error(errorMessage, err);
-            err.printStackTrace();
             healthy = false;
             throw new RuntimeException(errorMessage);
         }
@@ -103,12 +108,12 @@ public class LightConnection {
             }
             inputReader = null;
         }
-        if (server != null) {
+        if (socket != null) {
             try {
-                server.close();
+                socket.close();
             } catch (Exception err) {
             }
-            server = null;
+            socket = null;
         }
     }
 }

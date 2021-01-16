@@ -113,6 +113,9 @@ public class LightDiscoveryService {
                 clientSocket.close();
         }
         List<Light> lightList = new ArrayList(lightMap.values());
+        for(Light light: lightList){
+            LOG.info("Discover Response: " + light);
+        }
         LOG.info("Discovered " + lightList.size() + " device(s)");
         return lightList;
     }
@@ -124,7 +127,6 @@ public class LightDiscoveryService {
 
         String response = new String(receivePacket.getData());
         YeelightResponse yeelightResponse = YeelightResponseParser.parse(response);
-        LOG.info("Discover Response: " + yeelightResponse);
         return new Light(yeelightResponse);
     }
 }

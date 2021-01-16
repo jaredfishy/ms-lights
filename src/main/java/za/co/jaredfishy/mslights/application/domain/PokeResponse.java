@@ -7,11 +7,11 @@ import java.time.LocalDateTime;
 public class PokeResponse {
 
     private String message;
-    private LocalDateTime timestamp;
+    private FormattedDateTime timestamp;
 
     public PokeResponse(String message) {
         this.message = message;
-        this.timestamp = LocalDateTime.now();
+        this.timestamp = FormattedDateTime.now();
     }
 
     @JsonProperty("message")
