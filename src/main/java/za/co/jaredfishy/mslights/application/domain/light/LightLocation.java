@@ -1,6 +1,6 @@
 package za.co.jaredfishy.mslights.application.domain.light;
 
-import java.time.LocalDateTime;
+import za.co.jaredfishy.mslights.application.domain.FormattedDateTime;
 
 public class LightLocation extends LightVariable {
 
@@ -8,7 +8,7 @@ public class LightLocation extends LightVariable {
     private final int port;
 
 
-    public LightLocation(LocalDateTime timestamp, String ip, int port) {
+    public LightLocation(FormattedDateTime timestamp, String ip, int port) {
         super(timestamp);
         this.ip = ip;
         this.port = port;

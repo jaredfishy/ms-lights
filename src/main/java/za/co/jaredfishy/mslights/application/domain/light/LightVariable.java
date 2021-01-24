@@ -1,16 +1,24 @@
 package za.co.jaredfishy.mslights.application.domain.light;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import za.co.jaredfishy.mslights.application.domain.FormattedDateTime;
 
 public class LightVariable {
 
-    private final LocalDateTime timestamp;
+    private final FormattedDateTime timestamp;
 
-    public LightVariable(LocalDateTime timestamp) {
+    public LightVariable(FormattedDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
-    public LocalDateTime getTimestamp() {
+    @JsonIgnore
+    public FormattedDateTime getTimestamp() {
         return timestamp;
+    }
+
+    @JsonProperty("timestamp")
+    public String getTimestampAsString() {
+        return timestamp.toString();
     }
 }

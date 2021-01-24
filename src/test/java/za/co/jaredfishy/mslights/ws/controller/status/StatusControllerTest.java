@@ -8,6 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import za.co.jaredfishy.mslights.application.domain.FormattedDateTime;
 import za.co.jaredfishy.mslights.application.domain.StatusResponse;
 import za.co.jaredfishy.mslights.application.service.status.StatusService;
 
@@ -33,26 +34,14 @@ public class StatusControllerTest {
     public void testGetStatus() throws Exception {
 
         given(statusService.getStatus()).willReturn(new StatusResponse(
-                LocalDateTime.of(2019, 12, 31, 17, 45, 32),
-                3
+                FormattedDateTime.of(LocalDateTime.of(2019, 12, 31, 17, 45, 32))
         ));
 
         mvc.perform(get("/service/status")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.size()", is(2)))
+                .andExpect(jsonPath("$.size()", is(1)))
                 .andExpect(jsonPath("$.timestamp", is("2019-12-31T17:45:32")))
-                .andExpect(jsonPath("$.connectionCount", is(3)))
-        ;
-    }
-    @Test
-    public void testRefresh() throws Exception {
-
-        //given(statusService.refresh()).willReturn();
-
-        mvc.perform(get("/service/refresh")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
         ;
     }
 }

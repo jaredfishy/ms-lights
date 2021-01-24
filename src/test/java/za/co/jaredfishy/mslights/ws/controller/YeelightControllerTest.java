@@ -14,10 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import za.co.jaredfishy.mslights.application.domain.yeelight.YeelightCommandRequest;
 import za.co.jaredfishy.mslights.application.service.YeelightService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;

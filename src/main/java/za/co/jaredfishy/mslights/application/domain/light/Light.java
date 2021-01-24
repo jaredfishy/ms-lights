@@ -3,6 +3,7 @@ package za.co.jaredfishy.mslights.application.domain.light;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.util.StringUtils;
 import za.co.jaredfishy.mslights.application.domain.yeelight.YeelightResponse;
+import za.co.jaredfishy.mslights.application.util.JSONSerializer;
 import za.co.jaredfishy.mslights.application.util.LightLocationBuilder;
 import za.co.jaredfishy.mslights.application.util.LightStatusBuilder;
 
@@ -35,5 +36,9 @@ public class Light extends LightDevice {
     @JsonProperty("status")
     public LightStatus getStatus() {
         return status;
+    }
+
+    public String toString(){
+        return JSONSerializer.serialize(this, super.toString());
     }
 }

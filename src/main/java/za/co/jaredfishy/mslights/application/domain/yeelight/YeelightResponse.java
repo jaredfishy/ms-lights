@@ -1,6 +1,7 @@
 package za.co.jaredfishy.mslights.application.domain.yeelight;
 
-import java.time.LocalDateTime;
+import za.co.jaredfishy.mslights.application.domain.FormattedDateTime;
+import za.co.jaredfishy.mslights.application.util.JSONSerializer;
 
 public class YeelightResponse {
 
@@ -17,7 +18,7 @@ public class YeelightResponse {
     private final int hue;
     private final int sat;
     private final String name;
-    private final LocalDateTime timestamp;
+    private final FormattedDateTime timestamp;
 
     public YeelightResponse(
             String id,
@@ -33,7 +34,7 @@ public class YeelightResponse {
             int hue,
             int sat,
             String name,
-            LocalDateTime timestamp
+            FormattedDateTime timestamp
     ) {
         this.id = id;
         this.location = location;
@@ -103,7 +104,11 @@ public class YeelightResponse {
         return name;
     }
 
-    public LocalDateTime getTimestamp() {
+    public FormattedDateTime getTimestamp() {
         return timestamp;
+    }
+
+    public String toString() {
+        return JSONSerializer.serialize(this, super.toString());
     }
 }
