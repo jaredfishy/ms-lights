@@ -2,6 +2,7 @@ package za.co.jaredfishy.mslights.application.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.scheduling.annotation.Async;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -41,6 +42,7 @@ public class LightConnectionV2 {
             throw new RuntimeException("Unable to open connection.");
         }
     }
+
     public String send(String message) throws SocketTimeoutException {
         Socket socket = null;
         BufferedOutputStream output = null;
